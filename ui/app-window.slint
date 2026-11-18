@@ -3,7 +3,7 @@ import { Styles } from "styles.slint";
 
 export component AppWindow inherits Window {
     property <int> count: 0;
-    property <string> token: "";
+    property <string> token: "No token set.";
 
     //default-font-family: "Fedoka One";
     default-font-weight: FontWeight.bold;
@@ -32,20 +32,32 @@ export component AppWindow inherits Window {
                 border-width: 2px;
                 border-color: Styles.accent;
                 border-radius: 10px;
-                height: 35px;
+                height: 45px;
                 clip: true;
                 drop-shadow-spread: 1px;
                 drop-shadow-blur: 10px;
                 drop-shadow-color: Styles.accent;
 
-                Text {
-                    width: parent.width;
-                    height: parent.height;
-                    vertical-alignment: center;
-                    horizontal-alignment: center;
+                VerticalLayout {
+                    padding: 5px;
 
-                    color: Styles.text;
-                    text: "Token: " + token;
+                    Text {
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+                        font-size: 10px;
+
+                        color: Styles.text;
+                        text: "Token:";
+                    }
+
+                    Text {
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+                        font-size: 15px;
+
+                        color: Styles.text;
+                        text: token;
+                    }
                 }
 
                 /*
