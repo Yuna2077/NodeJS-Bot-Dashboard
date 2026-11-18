@@ -1,0 +1,113 @@
+import { Button, VerticalBox, LineEdit, TextEdit } from "std-widgets.slint";
+import { Styles } from "styles.slint";
+
+export component AppWindow inherits Window {
+    property <int> count: 0;
+    property <string> token: "";
+
+    //default-font-family: "Fedoka One";
+    default-font-weight: FontWeight.bold;
+    background: Styles.window;
+
+    GridLayout {
+        padding: 25px;
+        spacing: 25px;
+
+        Row {
+            Text {
+                horizontal-alignment: center;
+
+                text: " › Dashboard ‹ ";
+                color: Styles.dim;
+                font-size: 24px;
+
+                stroke: Styles.text;
+                stroke-width: 2px;
+            }
+        }
+
+        Row {
+            Rectangle {
+                background: Styles.surface;
+                border-width: 2px;
+                border-color: Styles.accent;
+                border-radius: 10px;
+                height: 35px;
+                clip: true;
+                drop-shadow-spread: 1px;
+                drop-shadow-blur: 10px;
+                drop-shadow-color: Styles.accent;
+
+                LineEdit {
+                    //input-type: InputType.password;
+                    width: parent.width;
+                    height: parent.height;
+
+                    placeholder-text: "Input token";
+
+                    edited(text) => {
+                        token = text;
+                    }
+                }
+
+                /*
+                // attempt 2
+                TextEdit {
+                    width: parent.width;
+                    height: parent.height;
+                    horizontal-alignment: center;
+
+                    placeholder-text: "Input token";
+                }
+
+                // attempt 1
+                LineEdit {
+                    width: parent.width;
+                    height: parent.height;
+                    placeholder-text: "Click to type...";
+                }
+                */
+            }
+        }
+
+        Row {
+            Rectangle {
+                background: Styles.surface;
+                border-width: 2px;
+                border-color: Styles.accent;
+                border-radius: 10px;
+                height: 35px;
+                clip: true;
+                drop-shadow-spread: 1px;
+                drop-shadow-blur: 10px;
+                drop-shadow-color: Styles.accent;
+
+                Text {
+                    width: parent.width;
+                    height: parent.height;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
+
+                    text: "Start Bot";
+                    color: Styles.text;
+                }
+
+                TouchArea {
+                    clicked => {
+                        count = count + 1;
+                    }
+                }
+            }
+        }
+
+        Row {
+            Text {
+                vertical-alignment: center;
+                horizontal-alignment: center;
+
+                text: "© 2026 Yuna2077. Powered by YunaCode";
+                color: Styles.text;
+            }
+        }
+    }
+}
