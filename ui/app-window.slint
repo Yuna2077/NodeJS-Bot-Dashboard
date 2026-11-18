@@ -9,6 +9,9 @@ export component AppWindow inherits Window {
     default-font-weight: FontWeight.bold;
     background: Styles.window;
 
+    // Background line edit that allows to use paste functions with buttons.
+    le := LineEdit{ width: 0px; height: 0px; }
+
     GridLayout {
         padding: 25px;
         spacing: 25px;
@@ -18,11 +21,8 @@ export component AppWindow inherits Window {
                 horizontal-alignment: center;
 
                 text: " › Dashboard ‹ ";
-                color: Styles.dim;
+                color: Styles.text;
                 font-size: 24px;
-
-                stroke: Styles.text;
-                stroke-width: 2px;
             }
         }
 
@@ -38,16 +38,14 @@ export component AppWindow inherits Window {
                 drop-shadow-blur: 10px;
                 drop-shadow-color: Styles.accent;
 
-                LineEdit {
-                    //input-type: InputType.password;
+                Text {
                     width: parent.width;
                     height: parent.height;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
 
-                    placeholder-text: "Input token";
-
-                    edited(text) => {
-                        token = text;
-                    }
+                    color: Styles.text;
+                    text: "Token: " + token;
                 }
 
                 /*
@@ -71,30 +69,63 @@ export component AppWindow inherits Window {
         }
 
         Row {
-            Rectangle {
-                background: Styles.surface;
-                border-width: 2px;
-                border-color: Styles.accent;
-                border-radius: 10px;
-                height: 35px;
-                clip: true;
-                drop-shadow-spread: 1px;
-                drop-shadow-blur: 10px;
-                drop-shadow-color: Styles.accent;
+            GridLayout {
+                spacing: 25px;
 
-                Text {
-                    width: parent.width;
-                    height: parent.height;
-                    vertical-alignment: center;
-                    horizontal-alignment: center;
+                Rectangle {
+                    background: Styles.surface;
+                    border-width: 2px;
+                    border-color: Styles.accent;
+                    border-radius: 10px;
+                    height: 35px;
+                    clip: true;
+                    drop-shadow-spread: 1px;
+                    drop-shadow-blur: 10px;
+                    drop-shadow-color: Styles.accent;
 
-                    text: "Start Bot";
-                    color: Styles.text;
+                    Text {
+                        width: parent.width;
+                        height: parent.height;
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+
+                        text: "Start Bot";
+                        color: Styles.text;
+                    }
+
+                    TouchArea {
+                        clicked => {
+                            count = count + 1;
+                        }
+                    }
                 }
 
-                TouchArea {
-                    clicked => {
-                        count = count + 1;
+                Rectangle {
+                    background: Styles.surface;
+                    border-width: 2px;
+                    border-color: Styles.accent;
+                    border-radius: 10px;
+                    height: 35px;
+                    clip: true;
+                    drop-shadow-spread: 1px;
+                    drop-shadow-blur: 10px;
+                    drop-shadow-color: Styles.accent;
+
+                    Text {
+                        width: parent.width;
+                        height: parent.height;
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+
+                        text: "Paste Token";
+                        color: Styles.text;
+                    }
+
+                    TouchArea {
+                        clicked => {
+                            le.paste();
+                            token = le.text;
+                        }
                     }
                 }
             }
