@@ -2,8 +2,7 @@ import { Button, VerticalBox, LineEdit, TextEdit } from "std-widgets.slint";
 import { Styles } from "styles.slint";
 
 export component AppWindow inherits Window {
-    property <int> count: 0;
-    property <string> token: "No token set.";
+    in-out property <string> token: "No token set.";
 
     //default-font-family: "Fedoka One";
     default-font-weight: FontWeight.bold;
@@ -106,9 +105,7 @@ export component AppWindow inherits Window {
                     }
 
                     TouchArea {
-                        clicked => {
-                            count = count + 1;
-                        }
+                        clicked => {}
                     }
                 }
 
