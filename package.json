@@ -1,5 +1,5 @@
 {
-    "name": "counter",
+    "name": "botapp",
     "version": "1.0.0",
     "main": "src/main.js",
     "type": "module",
@@ -7,6 +7,9 @@
         "slint-ui": "^1.19.0"
     },
     "scripts": {
-        "start": "node --import slint-ui/register ."
+        "start": "node --import slint-ui/register .",
+        "discord-api-types": "^0.38.56",
+        "discord.js": "^14.27.0",
+        "sqlite3": "^6.0.1"
     }
 }

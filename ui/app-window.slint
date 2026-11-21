@@ -1,27 +1,150 @@
-import { Button, VerticalBox, LineEdit, TextEdit } from "std-widgets.slint";
-import { Styles } from "styles.slint";
+import { VerticalBox, LineEdit, TextEdit } from "std-widgets.slint";
+import { MainFrame, MainButton } from "app-custom-widgets.slint";
+import { Styles } from "app-styles.slint";
 
 export component AppWindow inherits Window {
+    // properties
+    in-out property <bool> bot_online: false;
     in-out property <string> token: "No token set.";
+    in-out property <string> ui_status_online: "offline";
+    in-out property <string> ui_status_memory: "offline";
+    in-out property <string> ui_status_cpu: "offline";
+    in-out property <string> ui_header_version: "Loading...";
 
-    //default-font-family: "Fedoka One";
+    // Callbacks
+    callback request_bot_toggle();
+
+    // Style for window + default settings
     default-font-weight: FontWeight.bold;
+    height: 1080px/3;
+    width: 1920px/3;
+    // full-screen: true;
     background: Styles.window;
 
     // Background line edit that allows to use paste functions with buttons.
-    le := LineEdit{ width: 0px; height: 0px; }
+    le := LineEdit {
+        width: 0px;
+        height: 0px;
+    }
+    FlexboxLayout {
+        // Header
+        Text {
+            width: 100%;
+            height: 10%;
+            vertical-alignment: center;
+            horizontal-alignment: center;
 
+            text: "Dashboard ~ V " + ui_header_version;
+            color: Styles.text;
+        }
+
+        // Main? idk
+        HorizontalLayout {
+            width: 100%;
+            height: 80%;
+
+            //#region MAIN LEFT
+            Rectangle {
+                width: 50%;
+                height: 100%;
+
+                VerticalLayout {
+                    padding: 15px;
+                    spacing: 15px;
+                    width: 100%;
+                    height: 100%;
+
+                    MainFrame {
+                        height: 50%;
+
+                        FlexboxLayout {
+                            padding: 10px;
+                            spacing: 10px;
+                            MainButton {
+                                width: 50%;
+                                height: 25%;
+
+                                Text {
+                                    text: "Start Bot";
+                                    color: Styles.text;
+                                }
+                            }
+                        }
+                    }
+
+                    MainFrame {
+                        height: 50%;
+                    }
+                }
+            }
+            //#endregion
+
+            //#region MAIN RIGHT
+            Rectangle {
+                background: red;
+                opacity: 0.2;
+
+                width: 50%;
+                height: 100%;
+            }
+            //#endregion
+        }
+
+        // Bottom
+        Text {
+            width: 100%;
+            height: 10%;
+            vertical-alignment: center;
+            horizontal-alignment: center;
+
+            text: "Made with slint\n© 2026 Yuna2077. Powered by YunaCode";
+            color: Styles.text;
+        }
+    }
+
+
+    /* OLD TEST INTERFACE
     GridLayout {
         padding: 25px;
         spacing: 25px;
 
         Row {
-            Text {
-                horizontal-alignment: center;
+            Rectangle {
+                background: Styles.surface;
+                border-width: 2px;
+                border-color: Styles.accent;
+                border-radius: 10px;
+                height: 80px;
+                clip: true;
+                drop-shadow-spread: 1px;
+                drop-shadow-blur: 10px;
+                drop-shadow-color: Styles.accent;
 
-                text: " › Dashboard ‹ ";
-                color: Styles.text;
-                font-size: 24px;
+                VerticalLayout {
+                    Text {
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+                        font-size: 15px;
+                        text: ui_status_online;
+                        color: Styles.text;
+                    }
+
+                    Text {
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+                        font-size: 15px;
+                        text: ui_status_memory;
+                        color: Styles.text;
+                    }
+
+                    Text {
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+                        font-size: 15px;
+                        text: ui_status_cpu;
+                        color: Styles.text;
+                    }
+                }
             }
         }
 
@@ -105,7 +228,9 @@ export component AppWindow inherits Window {
                     }
 
                     TouchArea {
-                        clicked => {}
+                        clicked => {
+                            request_bot_toggle();
+                        }
                     }
                 }
 
@@ -139,15 +264,6 @@ export component AppWindow inherits Window {
                 }
             }
         }
-
-        Row {
-            Text {
-                vertical-alignment: center;
-                horizontal-alignment: center;
-
-                text: "© 2026 Yuna2077. Powered by YunaCode";
-                color: Styles.text;
-            }
-        }
     }
+        */
 }
