@@ -1,28 +1,15 @@
+// Import stuff
 import { AppWindow } from "../ui/app-window.slint";
-import { Client, GatewayIntentBits } from "discord.js";
-import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v10";
+import { run, shutdown } from "./bot_source/index.js";
+import {
+  BOT_TOKEN,
+  APP_VERSION,
+  APP_LIMIT_MEMORY
+} from "./env.js"; // i honestly dont know why i should use the dotenv "extension"
 
 
-/*
- • • • • • • • • • • • • • • 
- CONFIG
- • • • • • • • • • • • • • • 
-*/
-
-var config = {
-  bot: {
-    status: {
-      name: "Gathering Informations...",
-      type: "Playing", // Playing, Listening
-      status: "online" // online, offline, dnd
-    },
-    memory_limit: 2048 // 2gb should be enough for most bots
-  },
-  app: {
-    version: "26.11"
-  }
-};
+// Variables
+let client = null;
 
 /*
  • • • • • • • • • • • • • • 
@@ -45,48 +32,27 @@ var SecondsToTime = function (n) {
 */
 
 let window = new AppWindow();
-window.ui_header_version = config.app.version;
+window.ui_header_version = APP_VERSION;
 
-window.request_bot_toggle = function () {
-  var token = window.token;
-  if (token === "No token set.") return;
+window.request_bot_start = function() {
+  window.ui_status_online="Starting...";
   try {
-    bot.login(token);
-  } catch (err) {
-    return
+    client = run(BOT_TOKEN);
+  } catch {
+    window.ui_status_online="Failed to start.";
   };
-
-  // Startup bot
-  var rest_client = new REST({ version: '10' }).setToken(token);
+  window.ui_status_online="Online";
 }
 
-//#region bot setup
-var bot = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
-});
-bot.once('clientReady', async () => {
-  window.ui_status_online = true;
-  bot.user.setPresence({
-    activities: [{
-      name: config.bot.status.name,
-      type: config.bot.status.type
-    }],
-    type: config.bot.status.status
-  });
-
-  setInterval(() => {
-    var memory = process.memoryUsage;
-
-    if (memory > config.bot.memory_limit) {
-      process.exit(1);
-    };
-  }, 10000);
-});
-//#endregion
+window.request_bot_stop = function() {
+  window.ui_status_online="Shutting Down...";
+  try {
+    shutdown(client);
+  } catch {
+    window.ui_status_online="Failed to shutdown.";
+  };
+  window.ui_status_online="Offline";
+}
 
 
 /*
@@ -106,7 +72,7 @@ setInterval(() => {
   window.ui_status_app_uptime_counter = window.ui_status_app_uptime_counter + 1;
   window.ui_status_app_uptime = SecondsToTime(window.ui_status_app_uptime_counter);
 
-  if (memory > config.bot.memory_limit) {
+  if (memory > parseInt(APP_LIMIT_MEMORY, 10)) {
     process.exit(1);
   };
 }, 1000);

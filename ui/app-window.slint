@@ -14,7 +14,8 @@ export component AppWindow inherits Window {
     in-out property <string> ui_header_version: "Loading...";
 
     // Callbacks
-    callback request_bot_toggle();
+    callback request_bot_start();
+    callback request_bot_stop();
 
     // Style for window + default settings
     default-font-weight: FontWeight.bold;
@@ -77,12 +78,34 @@ export component AppWindow inherits Window {
                             }
 
                             MainButton {
-                                width: 50%;
+                                width: 47.5%;
                                 height: 25%;
 
                                 Text {
                                     text: "Start Bot";
                                     color: Styles.text;
+                                }
+
+                                TouchArea {
+                                    clicked => {
+                                        request_bot_start();
+                                    }
+                                }
+                            }
+
+                            MainButton {
+                                width: 47.5%;
+                                height: 25%;
+
+                                Text {
+                                    text: "Stop Bot";
+                                    color: Styles.text;
+                                }
+
+                                TouchArea {
+                                    clicked => {
+                                        request_bot_stop();
+                                    }
                                 }
                             }
                         }
@@ -227,168 +250,4 @@ export component AppWindow inherits Window {
             color: Styles.text;
         }
     }
-
-    /* OLD TEST INTERFACE
-    GridLayout {
-        padding: 25px;
-        spacing: 25px;
-
-        Row {
-            Rectangle {
-                background: Styles.surface;
-                border-width: 2px;
-                border-color: Styles.accent;
-                border-radius: 10px;
-                height: 80px;
-                clip: true;
-                drop-shadow-spread: 1px;
-                drop-shadow-blur: 10px;
-                drop-shadow-color: Styles.accent;
-
-                VerticalLayout {
-                    Text {
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-                        font-size: 15px;
-                        text: ui_status_online;
-                        color: Styles.text;
-                    }
-
-                    Text {
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-                        font-size: 15px;
-                        text: ui_status_memory;
-                        color: Styles.text;
-                    }
-
-                    Text {
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-                        font-size: 15px;
-                        text: ui_status_cpu;
-                        color: Styles.text;
-                    }
-                }
-            }
-        }
-
-        Row {
-            Rectangle {
-                background: Styles.surface;
-                border-width: 2px;
-                border-color: Styles.accent;
-                border-radius: 10px;
-                height: 45px;
-                clip: true;
-                drop-shadow-spread: 1px;
-                drop-shadow-blur: 10px;
-                drop-shadow-color: Styles.accent;
-
-                VerticalLayout {
-                    padding: 5px;
-
-                    Text {
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-                        font-size: 10px;
-
-                        color: Styles.text;
-                        text: "Token:";
-                    }
-
-                    Text {
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-                        font-size: 15px;
-
-                        color: Styles.text;
-                        text: token;
-                    }
-                }
-
-                /*
-                // attempt 2
-                TextEdit {
-                    width: parent.width;
-                    height: parent.height;
-                    horizontal-alignment: center;
-
-                    placeholder-text: "Input token";
-                }
-
-                // attempt 1
-                LineEdit {
-                    width: parent.width;
-                    height: parent.height;
-                    placeholder-text: "Click to type...";
-                }
-                */
-            }
-        }
-
-        Row {
-            GridLayout {
-                spacing: 25px;
-
-                Rectangle {
-                    background: Styles.surface;
-                    border-width: 2px;
-                    border-color: Styles.accent;
-                    border-radius: 10px;
-                    height: 35px;
-                    clip: true;
-                    drop-shadow-spread: 1px;
-                    drop-shadow-blur: 10px;
-                    drop-shadow-color: Styles.accent;
-
-                    Text {
-                        width: parent.width;
-                        height: parent.height;
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-
-                        text: "Start Bot";
-                        color: Styles.text;
-                    }
-
-                    TouchArea {
-                        clicked => {
-                            request_bot_toggle();
-                        }
-                    }
-                }
-
-                Rectangle {
-                    background: Styles.surface;
-                    border-width: 2px;
-                    border-color: Styles.accent;
-                    border-radius: 10px;
-                    height: 35px;
-                    clip: true;
-                    drop-shadow-spread: 1px;
-                    drop-shadow-blur: 10px;
-                    drop-shadow-color: Styles.accent;
-
-                    Text {
-                        width: parent.width;
-                        height: parent.height;
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-
-                        text: "Paste Token";
-                        color: Styles.text;
-                    }
-
-                    TouchArea {
-                        clicked => {
-                            le.paste();
-                            token = le.text;
-                        }
-                    }
-                }
-            }
-        }
-    }
-        */
 }
