@@ -26,6 +26,20 @@ var config = {
 
 /*
  • • • • • • • • • • • • • • 
+ HELPER
+ • • • • • • • • • • • • • • 
+*/
+//#region HELPER
+var SecondsToTime = function (n) {
+  // Source - https://stackoverflow.com/a/1322771
+  // Posted by Cleiton, modified by community. See post 'Timeline' for change history
+  // Retrieved 2026-11-22, License - CC BY-SA 4.0
+  return new Date(n * 1000).toISOString().substring(14, 19)
+}
+//#endregion
+
+/*
+ • • • • • • • • • • • • • • 
  HANDLE WINDOW
  • • • • • • • • • • • • • • 
 */
@@ -87,8 +101,10 @@ setInterval(() => {
   var memory = process.memoryUsage();
   var cpu = process.cpuUsage();
 
-  window.ui_status_memory = "mem: " + (memory.rss / 1024 / 1024).toFixed(2) + " MB";
-  window.ui_status_cpu =  "cpu: " +  Math.round((cpu.user/cpu.system) * 10) / 10 + "%";
+  window.ui_status_memory = (memory.rss / 1024 / 1024).toFixed(2) + " MB";
+  window.ui_status_cpu =  Math.round((cpu.user/cpu.system) * 10) / 10 + "%";
+  window.ui_status_app_uptime_counter = window.ui_status_app_uptime_counter + 1;
+  window.ui_status_app_uptime = SecondsToTime(window.ui_status_app_uptime_counter);
 
   if (memory > config.bot.memory_limit) {
     process.exit(1);
