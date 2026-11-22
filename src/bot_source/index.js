@@ -8,7 +8,7 @@ import { Routes } from "discord-api-types/v10";
  * @param {string} token - Token of the bot.
  * @return {Client, RestClient} Returns client + restClient of the bot.
 */
-export function run(token) {
+export async function run(token) {
   var client = new Client({
     intents: [
       GatewayIntentBits.Guilds,
@@ -20,7 +20,7 @@ export function run(token) {
   var restClient = new REST({ version: "10" }).setToken(token);
 
   try {
-    client.login(token);
+    await client.login(token);
   } catch(err) {
     console.error("Bot failed to start with error:\n" + err);
     return false;
@@ -33,6 +33,6 @@ export function run(token) {
  * @param {Client} client - The client returned after using the run function.
  * @returns {null}
 */
-export function shutdown(client) {
-  client.destroy();
+export async function shutdown(client) {
+  await client.destroy();
 };

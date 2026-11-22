@@ -16,6 +16,7 @@ export component AppWindow inherits Window {
     // Callbacks
     callback request_bot_start();
     callback request_bot_stop();
+    callback request_bot_restart();
 
     // Style for window + default settings
     default-font-weight: FontWeight.bold;
@@ -38,7 +39,7 @@ export component AppWindow inherits Window {
             vertical-alignment: center;
             horizontal-alignment: center;
 
-            text: "Dashboard ~ V " + ui_header_version;
+            text: "Simple NodeJS Dashboard ~ V " + ui_header_version;
             color: Styles.text;
         }
 
@@ -67,6 +68,7 @@ export component AppWindow inherits Window {
                             padding: 10px;
                             spacing: 10px;
 
+                            // Header
                             Text {
                                 vertical-alignment: center;
                                 horizontal-alignment: center;
@@ -77,12 +79,13 @@ export component AppWindow inherits Window {
                                 color: Styles.text;
                             }
 
+                            // Func: Start
                             MainButton {
                                 width: 47.5%;
                                 height: 25%;
 
                                 Text {
-                                    text: "Start Bot";
+                                    text: "Start";
                                     color: Styles.text;
                                 }
 
@@ -93,18 +96,36 @@ export component AppWindow inherits Window {
                                 }
                             }
 
+                            // Func: Stop
                             MainButton {
                                 width: 47.5%;
                                 height: 25%;
 
                                 Text {
-                                    text: "Stop Bot";
+                                    text: "Stop";
                                     color: Styles.text;
                                 }
 
                                 TouchArea {
                                     clicked => {
                                         request_bot_stop();
+                                    }
+                                }
+                            }
+
+                            // Func: Restart
+                            MainButton {
+                                width: 47.5%;
+                                height: 25%;
+
+                                Text {
+                                    text: "Restart";
+                                    color: Styles.text;
+                                }
+
+                                TouchArea {
+                                    clicked => {
+                                        request_bot_restart();
                                     }
                                 }
                             }
