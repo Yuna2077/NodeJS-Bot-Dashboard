@@ -4,7 +4,6 @@
     "main": "src/main.js",
     "type": "module",
     "dependencies": {
-        "dotenv": "^18.0.10",
         "slint-ui": "^1.19.0"
     },
     "scripts": {

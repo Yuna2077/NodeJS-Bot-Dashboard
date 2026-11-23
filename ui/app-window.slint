@@ -7,6 +7,9 @@ export component AppWindow inherits Window {
     in-out property <bool> bot_online: false;
     in-out property <string> token: "No token set.";
     in-out property <string> ui_status_online: "offline";
+    in-out property <int> ui_status_bot_uptime_counter: 0;
+    in-out property <string> ui_status_bot_uptime: "00:00:00";
+
     in-out property <int> ui_status_app_uptime_counter: 0;
     in-out property <string> ui_status_app_uptime: "00:00:00";
     in-out property <string> ui_status_memory: "offline";
@@ -205,6 +208,21 @@ export component AppWindow inherits Window {
                                     horizontal-alignment: TextHorizontalAlignment.left;
 
                                     text: "Status: " + ui_status_online;
+                                    color: Styles.text;
+                                }
+                            }
+
+                            MainButton {
+                                width: 100%;
+                                height: 13%;
+
+                                Text {
+                                    height: 100%;
+                                    width: 90%;
+                                    vertical-alignment: center;
+                                    horizontal-alignment: TextHorizontalAlignment.left;
+
+                                    text: "Bot Uptime: " + ui_status_bot_uptime_counter;
                                     color: Styles.text;
                                 }
                             }

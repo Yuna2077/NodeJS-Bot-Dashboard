@@ -64,9 +64,10 @@ window.request_bot_start = async function (restart = false) {
 
 window.request_bot_stop = async function (restart = false) {
   DebounceFunction("request_bot", async function () {
-    if (client) return;
+    if (!client) return;
     if (!restart) window.ui_status_online = "Stopping...";
     try { client = await shutdown(client); } catch { window.ui_status_online = "Failed to stop."; };
+    client = null;
     if (!restart) window.ui_status_online = "Offline";
   });
 }
@@ -94,13 +95,18 @@ setInterval(() => {
   var cpu = process.cpuUsage();
 
   window.ui_status_memory = (memory.rss / 1024 / 1024).toFixed(2) + " MB";
-  window.ui_status_cpu = Math.round((cpu.user / cpu.system) * 10) / 10 + "%";
+  window.ui_status_cpu = Math.round((cpu.user / cpu.system) * 100) / 100 + "%";
+
   window.ui_status_app_uptime_counter = window.ui_status_app_uptime_counter + 1;
   window.ui_status_app_uptime = SecondsToTime(window.ui_status_app_uptime_counter);
+
+  window.ui_status_bot_uptime_counter = (client) ? window.ui_status_bot_uptime_counter + 1 : 0;
+  window.ui_status_bot_uptime = SecondsToTime(window.ui_status_bot_uptime_counter);
 
   if (memory > parseInt(APP_LIMIT_MEMORY, 10)) {
     process.exit(1);
   };
 }, 1000);
+
 
 await window.run();
