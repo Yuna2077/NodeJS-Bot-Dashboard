@@ -42,8 +42,11 @@ var SecondsToTime = function (n) {
 var DebounceFunction = async function (n, c) {
   if (debounces[n]) return;
   debounces[n] = true;
-  await c();
-  debounces[n] = false;
+  try {
+    await c()
+  } finally {
+    debounces[n] = false;
+  };
 };
 //#endregion
 
