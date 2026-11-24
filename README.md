@@ -4,7 +4,7 @@ Simple NodeJS discord bot interface
 ---
 This dashboard was made from the [slint-nodejs-template](https://github.com/slint-ui/slint-nodejs-template)
 
-![Screenshot_11-24-2026](https://github.com/Yuna2077/NodeJS-Bot-Dashboard/other/screenshot_11-24-2026.png?raw=true)
+![Screenshot_11-24-2026](https://github.com/Yuna2077/NodeJS-Bot-Dashboard/blob/main/other/screenshot_11-24-2026.png?raw=true)
 
 ## Software this bot uses
 Slint, discord.js, discord-api-types
