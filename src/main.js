@@ -163,12 +163,9 @@ setInterval(() => {
 }, 1000);
 log("- - Started info display loop.");
 
-listenOnLog(function() {
-  window.ui_log = getLogsStringedReversed(5);
-});
+listenOnLog(function() { window.ui_log = getLogsStringedReversed(5); });
 log("- - Started info display log listener");
 
 
 log("- Starting window.");
 await window.run();
-log("- Windo started successfully");
