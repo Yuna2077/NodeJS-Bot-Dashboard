@@ -141,9 +141,6 @@ window.request_bot_put_commands = async function () {
  • • • • • • • • • • • • • • 
 */
 log("- Setting up window info display.");
-window.ui_status_memory = "Loading...";
-window.ui_status_cpu = "Loading...";
-
 setInterval(() => {
   var memory = process.memoryUsage();
   var cpu = process.cpuUsage();
