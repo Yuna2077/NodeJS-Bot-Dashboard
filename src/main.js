@@ -61,9 +61,9 @@ window.ui_header_version = APP_VERSION;
 
 log("- Setting up window commands.");
 window.request_bot_start = async function (restart = false) {
+  if (client !== null) return log("- Request failed, client is already present.");
   log("Request bot start.");
   log("- Is restart: " + restart);
-  if (client !== null) return log("- Request failed, client is already present.");
   DebounceFunction("request_bot", async function () {
     if (!restart) window.ui_status_online = "Starting...";
     try {
@@ -83,9 +83,9 @@ window.request_bot_start = async function (restart = false) {
 }
 
 window.request_bot_stop = async function (restart = false) {
+  if (client === null) return log("- Request failed, no client found.");
   log("Request bot stop.");
   log("- Is restart: " + restart);
-  if (client === null) return log("- Request failed, no client found.");
   DebounceFunction("request_bot", async function () {
     if (!restart) window.ui_status_online = "Stopping...";
     try {
@@ -119,8 +119,8 @@ window.request_bot_restart = async function () {
 
 
 window.request_bot_put_commands = async function () {
-  log("Request bot put commands.");
   if (client === null) return;
+  log("Request bot put commands.");
   DebounceFunction("request_bot", async function () {
     try {
       log("- Attemting to put commands.");
