@@ -1,7 +1,7 @@
 // Import stuff
 import { AppWindow } from "../ui/app-window.slint";
 import { run, shutdown, put_commands } from "./bot_source/index.js";
-import { log, logReset, logSave, getLogsStringed, listenOnLog, getLogsRaw, getLogsStringedReversed } from "./utils/eventlogs.js";
+import { log, logReset, logSave, listenOnLog, getLogsStringedReversed } from "./utils/eventlogs.js";
 import {
   BOT_TOKEN,
   BOT_CLIENT_ID,
@@ -15,11 +15,6 @@ let client = null;
 let restClient = null;
 let debounces = [];
 
-/*
- • • • • • • • • • • • • • • 
- HELPER
- • • • • • • • • • • • • • • 
-*/
 //#region HELPER
 /**
  * Converts seconds into a more readable time string.
@@ -50,6 +45,7 @@ var DebounceFunction = async function (n, c) {
 };
 //#endregion
 
+
 /*
  • • • • • • • • • • • • • • 
  HANDLE WINDOW
@@ -60,6 +56,7 @@ let window = new AppWindow();
 window.ui_header_version = APP_VERSION;
 
 log("- Setting up window commands.");
+//#region Window Functions
 window.request_bot_start = async function (restart = false) {
   if (client !== null) return log("- Request failed, client is already present.");
   log("Request bot start.");
@@ -137,13 +134,11 @@ window.request_bot_put_commands = async function () {
     };
   });
 }
+//#endregion
 
-/*
- • • • • • • • • • • • • • • 
- INFO DISPLAY
- • • • • • • • • • • • • • • 
-*/
-log("- Setting up window info display.");
+
+//#region App Loop
+log("- Starting app loop");
 setInterval(() => {
   var memory = process.memoryUsage();
   var cpu = process.cpuUsage();
@@ -161,10 +156,10 @@ setInterval(() => {
     process.exit(1);
   };
 }, 1000);
-log("- - Started info display loop.");
+//#endregion
 
+log("- Starting app log listener.");
 listenOnLog(function() { window.ui_log = getLogsStringedReversed(5); });
-log("- - Started info display log listener");
 
 
 log("- Starting window.");
