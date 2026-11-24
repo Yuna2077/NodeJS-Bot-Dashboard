@@ -95,8 +95,11 @@ window.request_bot_stop = async function (restart = false) {
       restClient = null;
       window.bot_online = false;
       log("- Successfully stopped.");
-      if (!restart) window.ui_status_online = "Offline";
-      logSave();
+      if (!restart) {
+        window.ui_status_online = "Offline";
+        logSave();
+        logReset();
+      };
     } catch(err) {
       log("- Failed to stop: " + err);
       logSave();
