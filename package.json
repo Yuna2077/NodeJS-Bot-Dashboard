@@ -1,9 +1,10 @@
 {
-    "name": "botapp",
-    "version": "1.0.0",
+    "name": "NodeJS-Bot-Interface",
+    "version": "2026.11.24",
     "main": "src/main.js",
     "type": "module",
     "dependencies": {
+        "discord.js": "^14.28.1",
         "slint-ui": "^1.19.0"
     },
     "scripts": {

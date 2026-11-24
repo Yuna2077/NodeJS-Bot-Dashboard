@@ -1,5 +1,5 @@
 import { VerticalBox, LineEdit, TextEdit } from "std-widgets.slint";
-import { MainFrame, MainButton } from "app-custom-widgets.slint";
+import { MainFrame, MainButton, LockedButton } from "app-custom-widgets.slint";
 import { Styles } from "app-styles.slint";
 
 export component AppWindow inherits Window {
@@ -16,15 +16,18 @@ export component AppWindow inherits Window {
     in-out property <string> ui_status_cpu: "offline";
     in-out property <string> ui_header_version: "Loading...";
 
+    in-out property <string> ui_log: "";
+
     // Callbacks
     callback request_bot_start();
     callback request_bot_stop();
     callback request_bot_restart();
+    callback request_bot_put_commands();
 
     // Style for window + default settings
     default-font-weight: FontWeight.bold;
-    height: 1080px / 3;
-    width: 1920px / 3;
+    height: 1080px / 2.5;
+    width: 1920px / 2.5;
     // full-screen: true;
     background: Styles.window;
 
@@ -55,6 +58,7 @@ export component AppWindow inherits Window {
             Rectangle {
                 width: 50%;
                 height: 100%;
+                clip: true;
 
                 VerticalLayout {
                     padding: 15px;
@@ -83,96 +87,45 @@ export component AppWindow inherits Window {
                             }
 
                             // Func: Start
-                            MainButton {
-                                width: 47.5%;
-                                height: 25%;
-
-                                Text {
-                                    text: "Start";
-                                    color: Styles.text;
-                                }
-
-                                TouchArea {
-                                    clicked => {
-                                        request_bot_start();
-                                    }
-                                }
+                            if !bot_online : MainButton {
+                                Text { text: "Start"; color: Styles.text; }
+                                TouchArea { clicked => {  request_bot_start(); } }
                             }
+                            if bot_online : LockedButton { Text { text: "Start"; color: Styles.text; }}
+
 
                             // Func: Stop
-                            MainButton {
-                                width: 47.5%;
-                                height: 25%;
-
-                                Text {
-                                    text: "Stop";
-                                    color: Styles.text;
-                                }
-
-                                TouchArea {
-                                    clicked => {
-                                        request_bot_stop();
-                                    }
-                                }
+                            if bot_online : MainButton {
+                                Text { text: "Stop"; color: Styles.text; }
+                                TouchArea { clicked => {  request_bot_stop(); } }
                             }
+                            if !bot_online : LockedButton { Text { text: "Stop"; color: Styles.text; }}
+
 
                             // Func: Restart
-                            MainButton {
-                                width: 47.5%;
-                                height: 25%;
-
-                                Text {
-                                    text: "Restart";
-                                    color: Styles.text;
-                                }
-
-                                TouchArea {
-                                    clicked => {
-                                        request_bot_restart();
-                                    }
-                                }
+                            if bot_online : MainButton {
+                                Text { text: "Restart"; color: Styles.text; }
+                                TouchArea { clicked => {  request_bot_restart(); } }
                             }
+                            if !bot_online : LockedButton { Text { text: "Restart"; color: Styles.text; }}
+
+
+                            // Func: Put Commands
+                            if bot_online : MainButton {
+                                Text { text: "Put Commands"; color: Styles.text; }
+                                TouchArea { clicked => {  request_bot_put_commands(); } }
+                            }
+                            if !bot_online : LockedButton { Text { text: "Put Commands"; color: Styles.text; }}
                         }
                     }
 
                     MainFrame {
                         height: 50%;
+                        clip: true;
 
-                        FlexboxLayout {
-                            cross-axis-line-alignment: LayoutAlignment.start;
-                            alignment: center;
-                            padding: 10px;
-                            spacing: 10px;
-
-                            Text {
-                                vertical-alignment: center;
-                                horizontal-alignment: center;
-                                height: 10%;
-                                width: 100%;
-
-                                text: "~ Monitoring ~";
-                                color: Styles.text;
-                            }
-
-                            MainButton {
-                                width: 45%;
-                                height: 25%;
-
-                                Text {
-                                    text: "Nothing";
-                                    color: Styles.text;
-                                }
-                            }
-
-                            MainButton {
-                                width: 45%;
-                                height: 25%;
-
-                                Text {
-                                    text: "Bot Resources";
-                                    color: Styles.text;
-                                }
-                            }
+                        Text {
+                            height: 90%; width: 95%;
+                            text: ui_log; color: Styles.text;
                         }
                     }
                 }
